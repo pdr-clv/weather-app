@@ -31,12 +31,18 @@ export const CityInfo = styled.div`
   height: 200px;
   background-color: red;
   p {
-    font-size: 1.4em;
+    font-size: 1.2em;
   }
 
   .pCity {
-    font-size: 1.6em;
+    font-size: 1.4em;
     color: blue;
     font-weight: bold;
   }
+`;
+
+export const MapContainer = styled.div`
+  width: 100%;
+  height: 250px;
+  background-color: white;
 `;
