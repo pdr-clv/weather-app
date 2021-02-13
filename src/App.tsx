@@ -9,8 +9,11 @@ import './App.css';
 const App: FC = () => {
   return (
     <div className='App'>
-      <InputCity />
-      <WeatherDisplay />
+      <h2 className='app-title'>Find the weather at any City in the world</h2>
+      <div className='container'>
+        <InputCity />
+        <WeatherDisplay />
+      </div>
       <Modal />
     </div>
   );

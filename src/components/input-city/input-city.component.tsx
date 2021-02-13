@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { getWeather, setLoading } from '../../store/actions/weatherActions';
 import { setAlert } from '../../store/actions/alertActions';
 
-
 import { InputContainer } from './input-city.styles';
 
 const InputCity: FC = () => {
@@ -13,7 +12,6 @@ const InputCity: FC = () => {
 
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('city', city);
     if (city.trim() === '') {
       return dispatch(setAlert('City is required!'));
     }
@@ -27,7 +25,6 @@ const InputCity: FC = () => {
 
   return (
     <InputContainer>
-      <h2>Find the weather at any City in the world</h2>
       <form onSubmit={(e) => handlerSubmit(e)}>
         <input
           type='text'
