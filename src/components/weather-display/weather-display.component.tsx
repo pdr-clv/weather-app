@@ -1,10 +1,10 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ReactMapGL, { Popup } from 'react-map-gl';
 
 import { LocalTime } from '../../classes/time-format';
 import { RootState } from '../../store';
 import { setAlert } from '../../store/actions/alertActions';
+import Map from '../map/map.component';
 
 import {
   WeatherContainer,
@@ -14,36 +14,11 @@ import {
   CityInfo,
 } from './weather-display.styles';
 
-interface viewportProps {
-  latitude: number;
-  longitude: number;
-  width: string;
-  height: string;
-  zoom: number;
-}
-
 const WeatherDisplay: FC = () => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.weather
   );
-  const [viewPort, setViewPort] = useState({
-    latitude: 0,
-    longitude: 0,
-    width: '100%',
-    height: '250px',
-    zoom: 2,
-  });
 
-  useEffect(() => {
-    const latitude = data ? data.coord.lat : 3;
-    const longitude = data ? data.coord.lon : 4;
-    setViewPort((viewPort: viewportProps) => ({
-      ...viewPort,
-      latitude,
-      longitude,
-    }));
-  }, [data]);
-  console.log(viewPort.longitude);
   const dispatch = useDispatch();
   if (error) dispatch(setAlert(error));
   //invoque class LocalTime, and initializing with data.timezone
@@ -92,18 +67,7 @@ const WeatherDisplay: FC = () => {
                 </p>
               </CityInfo>
             </DataContainer>
-            <ReactMapGL
-              {...viewPort}
-              onViewportChange={(nextviewport: viewportProps) =>
-                setViewPort(nextviewport)
-              }
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-              mapStyle='mapbox://styles/pdrclv/ckl43evxb2cvh17mpiwr9h789'
-            >
-              <Popup latitude={data.coord.lat} longitude={data.coord.lon}>
-                {data.name}
-              </Popup>
-            </ReactMapGL>
+            <Map lat={data.coord.lat} lon={data.coord.lon} />
           </div>
         )
       )}
