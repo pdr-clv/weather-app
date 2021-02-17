@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getWeather, setLoading } from '../../store/actions/weatherActions';
 import { setAlert } from '../../store/actions/alertActions';
 
-import { InputContainer } from './input-city.styles';
+import { FormContainer } from './input-city.styles';
 
 const InputCity: FC = () => {
   const dispatch = useDispatch();
@@ -24,16 +24,14 @@ const InputCity: FC = () => {
   };
 
   return (
-    <InputContainer>
-      <form onSubmit={(e) => handlerSubmit(e)}>
-        <input
-          type='text'
-          onChange={(e) => handlerChange(e)}
-          placeholder='Enter city name'
-        />
-        <button type='submit'>Search</button>
-      </form>
-    </InputContainer>
+    <FormContainer onSubmit={(e) => handlerSubmit(e)}>
+      <input
+        type='text'
+        onChange={(e) => handlerChange(e)}
+        placeholder='Enter city name'
+      />
+      <button type='submit'>Search</button>
+    </FormContainer>
   );
 };
 

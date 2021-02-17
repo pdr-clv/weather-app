@@ -1,21 +1,19 @@
 import { FC } from 'react';
 
-import InputCity from './components/input-city/input-city.component';
+import GlobalStyle from './GlobalStyles';
+
 import WeatherDisplay from './components/weather-display/weather-display.component';
 import Modal from './components/modal/modal.component';
-
-import './App.css';
+import Header from './components/header/header.component';
 
 const App: FC = () => {
   return (
-    <div className='App'>
-      <h2 className='app-title'>Find the weather at any City in the world</h2>
-      <div className='container'>
-        <InputCity />
-        <WeatherDisplay />
-      </div>
+    <>
+      <GlobalStyle />
+      <Header />
+      <WeatherDisplay />
       <Modal />
-    </div>
+    </>
   );
 };
 

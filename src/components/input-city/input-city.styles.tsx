@@ -1,38 +1,28 @@
 import styled from 'styled-components';
 
-export const InputContainer = styled.div`
-  width: 25%;
-  background-color: yellow;
+export const FormContainer = styled.form`
+  input,
+  button {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.3em;
+  }
 
-  form {
-    width: 90%;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    height: 100px;
-    justify-content: center;
-    align-content: space-between;
-
-    input,
-    button {
-      margin: auto;
-      padding: 5px;
-      width: 100%;
+  button {
+    margin-left: 10px;
+    padding: 3px;
+    margin: -75px;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    :hover {
+      background-color: blueviolet;
     }
+  }
 
-    button {
-      width: 25%;
-      padding: 5px;
-      background-color: blue;
-      color: white;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      :hover {
-        background-color: blueviolet;
-      }
-    }
+  input {
+    width: 385px;
+    color: blue;
   }
 `;
