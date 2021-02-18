@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FormContainer = styled.form`
   input,
   button {
-    padding: 5px;
+    padding: 5px 80px 5px 5px;
     border-radius: 5px;
     border: none;
     font-size: 1.3em;
@@ -13,16 +13,17 @@ export const FormContainer = styled.form`
     margin-left: 10px;
     padding: 3px;
     margin: -75px;
-    background-color: blue;
-    color: white;
+    background-color: rgb(1, 111, 185);
+    color: rgb(206, 195, 193);
     cursor: pointer;
     :hover {
-      background-color: blueviolet;
+      background-color: rgb(222, 60, 75);
     }
   }
 
   input {
     width: 385px;
-    color: blue;
+    color: rgb(24, 40, 37);
+    background-color: rgb(206, 195, 193);
   }
 `;

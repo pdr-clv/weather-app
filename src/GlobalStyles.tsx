@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import BackgroundImage from './imgs/background-night.jpg';
 
@@ -10,17 +10,23 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
 
-  #root {
-    margin: 0 auto;
-  }
-
   html {
     background: url(${BackgroundImage}) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    color: white;
+    color: rgb(206, 195, 193);
   }
 
+  body {
+    font-family: sans-serif,Helvetica,Arial;
+  }
+
+`;
+
+export const ComponentsContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;

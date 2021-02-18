@@ -1,7 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import ReactMapGL, { Marker } from 'react-map-gl';
 
-import { PinImg } from './map.styles';
+import { MapContainer, PinImg, MarkerMap } from './map.styles';
 
 interface viewportProps {
   latitude: number;
@@ -22,7 +21,7 @@ const Map: FC<MapProps> = (props) => {
     latitude: lat,
     longitude: lon,
     width: '100%',
-    height: '250px',
+    height: '50vh',
     zoom: 2,
   });
 
@@ -37,7 +36,7 @@ const Map: FC<MapProps> = (props) => {
   }, [lat, lon]);
 
   return (
-    <ReactMapGL
+    <MapContainer
       {...viewPort}
       onViewportChange={(nextviewport: viewportProps) =>
         setViewPort(nextviewport)
@@ -45,12 +44,10 @@ const Map: FC<MapProps> = (props) => {
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle='mapbox://styles/pdrclv/ckl43evxb2cvh17mpiwr9h789'
     >
-      <div>
-        <Marker className='marker-container' latitude={lat} longitude={lon}>
-          <PinImg />
-        </Marker>
-      </div>
-    </ReactMapGL>
+      <MarkerMap className='marker-container' latitude={lat} longitude={lon}>
+        <PinImg />
+      </MarkerMap>
+    </MapContainer>
   );
 };
 

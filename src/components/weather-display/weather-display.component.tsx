@@ -8,7 +8,7 @@ import Map from '../map/map.component';
 
 import {
   WeatherContainer,
-  DataContainer,
+  Content,
   WeatherInfo,
   WeatherDescription,
   CityInfo,
@@ -31,26 +31,28 @@ const WeatherDisplay: FC = () => {
         <div>Loading...</div>
       ) : (
         data && (
-          <div>
-            <DataContainer>
-              <WeatherInfo>
-                <img
-                  src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
-                  alt=''
-                />
-                <WeatherDescription>
-                  {data.weather[0].description}
-                </WeatherDescription>
-              </WeatherInfo>
+          <Content>
+            <div className='item-content'>
               <CityInfo>
-                <p className='pCity'>
+                <h2>
                   {data.name} - {data.sys.country}
-                </p>
+                </h2>
+                <span className='time'>
+                  Local Time: {localTime.getLocalTime()}
+                </span>
+                <WeatherInfo>
+                  <img
+                    src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                    alt=''
+                  />
+                  <WeatherDescription>
+                    {data.weather[0].description}
+                  </WeatherDescription>
+                </WeatherInfo>
                 <p>
                   Temp: {(data.main.temp - 273.15).toFixed(0)} ºC /{' '}
                   {(((data.main.temp - 273.15) * 9) / 5 + 32).toFixed(0)} ºF
                 </p>
-                <p>Local Time: {localTime.getLocalTime()}</p>
                 <p>
                   Sunrise: {localTime.getTargetTime(data.sys.sunrise * 1)}{' '}
                   Sunset:
@@ -66,9 +68,11 @@ const WeatherDisplay: FC = () => {
                   ºF
                 </p>
               </CityInfo>
-            </DataContainer>
-            <Map lat={data.coord.lat} lon={data.coord.lon} />
-          </div>
+            </div>
+            <div className='item-content'>
+              <Map lat={data.coord.lat} lon={data.coord.lon} />
+            </div>
+          </Content>
         )
       )}
     </WeatherContainer>
