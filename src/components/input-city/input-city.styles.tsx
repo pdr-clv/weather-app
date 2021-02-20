@@ -14,7 +14,7 @@ export const FormContainer = styled.form`
     padding: 3px;
     margin: -75px;
     background-color: rgb(1, 111, 185);
-    color: rgb(206, 195, 193);
+    color: white;
     cursor: pointer;
     :hover {
       background-color: rgb(222, 60, 75);
@@ -24,6 +24,5 @@ export const FormContainer = styled.form`
   input {
     width: 385px;
     color: rgb(24, 40, 37);
-    background-color: rgb(206, 195, 193);
   }
 `;

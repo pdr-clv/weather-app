@@ -1,17 +1,20 @@
 import React, { FC } from 'react';
+import Switch from 'react-switch';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { LocalTime } from '../../classes/time-format';
+import { getCelsius } from '../../utils';
 import { RootState } from '../../store';
 import { setAlert } from '../../store/actions/alertActions';
 import Map from '../map/map.component';
+import SecondaryInfo from '../secondary-info/secondary-info.component';
 
 import {
   WeatherContainer,
   Content,
-  WeatherInfo,
-  WeatherDescription,
+  ImgWeather,
   CityInfo,
+  HeaderInfo,
 } from './weather-display.styles';
 
 const WeatherDisplay: FC = () => {
@@ -33,40 +36,39 @@ const WeatherDisplay: FC = () => {
         data && (
           <Content>
             <div className='item-content'>
+              <Switch
+                onChange={() => {}}
+                checked={false}
+                handleDiameter={24}
+                height={10}
+                width={40}
+                uncheckedIcon={false}
+                checkedIcon={false}
+              />
               <CityInfo>
                 <h2>
                   {data.name} - {data.sys.country}
                 </h2>
-                <span className='time'>
-                  Local Time: {localTime.getLocalTime()}
+                <span className='span-time'>
+                  Local Time: <span>{localTime.getLocalTime()}</span>
                 </span>
-                <WeatherInfo>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
-                    alt=''
-                  />
-                  <WeatherDescription>
-                    {data.weather[0].description}
-                  </WeatherDescription>
-                </WeatherInfo>
-                <p>
-                  Temp: {(data.main.temp - 273.15).toFixed(0)} ºC /{' '}
-                  {(((data.main.temp - 273.15) * 9) / 5 + 32).toFixed(0)} ºF
-                </p>
-                <p>
-                  Sunrise: {localTime.getTargetTime(data.sys.sunrise * 1)}{' '}
-                  Sunset:
-                  {localTime.getTargetTime(data.sys.sunset * 1)}
-                </p>
-                <p>
-                  Pressure: {data.main.pressure} Humidity: {data.main.humidity}
-                </p>
-                <p>
-                  Temp. Feeling:
-                  {(data.main.feels_like - 273.15).toFixed(0)} ºC /{' '}
-                  {(((data.main.feels_like - 273.15) * 9) / 5 + 32).toFixed(0)}{' '}
-                  ºF
-                </p>
+                <HeaderInfo>
+                  <span className='temperatura'>
+                    {getCelsius(data.main.temp * 1)}
+                  </span>
+                  <span className='degrees'>ºC</span>
+                  <span className='feeling'>
+                    FEELS LIKE {getCelsius(data.main.feels_like * 1)} ºC
+                  </span>
+                  <ImgWeather>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                      alt=''
+                    />
+                    <span>{data.weather[0].main}</span>
+                  </ImgWeather>
+                </HeaderInfo>
+                <SecondaryInfo {...data} />
               </CityInfo>
             </div>
             <div className='item-content'>

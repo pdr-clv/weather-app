@@ -20,7 +20,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: sans-serif,Helvetica,Arial;
+    font-family: 'Roboto', sans-serif, Helvetica,Arial;
   }
 
 `;
