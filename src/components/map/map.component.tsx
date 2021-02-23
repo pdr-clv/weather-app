@@ -21,7 +21,7 @@ const Map: FC<MapProps> = (props) => {
     latitude: lat,
     longitude: lon,
     width: '100%',
-    height: '50vh',
+    height: '100%',
     zoom: 2,
   });
 

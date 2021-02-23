@@ -12,11 +12,45 @@ export const Content = styled.div`
   width: 85%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   //every item-content is weather and cityinfo and map
   .item-content {
     width: 49%;
     background-color: rgba(0, 0, 0, 0.4);
+
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  @media only screen and (max-width: 1200px) {
+    width: 95%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: 98;
+  }
+`;
+
+export const SwitchContainer = styled.div<{ farengeit: boolean }>`
+  padding: 20px 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  span {
+    margin: 0 5px;
+    font-weight: ${({ farengeit }) => (!farengeit ? 'bold' : 'unset')};
+    color: ${({ farengeit }) => (!farengeit ? 'rgb(135, 245, 251)' : 'unset')};
+  }
+
+  .farengeit {
+    font-weight: ${({ farengeit }) => (farengeit ? 'bold' : 'unset')};
+    color: ${({ farengeit }) => (farengeit ? 'rgb(135, 245, 251)' : 'unset')};
   }
 `;
 export const CityInfo = styled.div`
@@ -37,23 +71,24 @@ export const HeaderInfo = styled.div`
   display: flex;
   align-items: center;
   font-weight: bold;
+  .temperature-container {
+    display: flex;
+    .degrees-container {
+      display: flex;
+      .temperatura {
+        font-size: 3.4em;
+      }
+    }
 
-  .temperatura {
-    font-size: 3.4em;
-  }
-  .degrees {
-    margin-top: -30px;
-    margin-left: 5px;
-  }
-  .feeling {
-    font-size: 0.7em;
-    margin-top: 30px;
-    margin-left: -15px;
+    .feeling {
+      font-size: 0.7em;
+      margin: 35px -10px;
+    }
   }
 `;
 
 export const ImgWeather = styled.div`
-  margin-top: -15px;
+  margin: 0 20px;
   position: relative;
   padding: 0 12px;
   img {

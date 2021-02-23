@@ -14,5 +14,13 @@ export const HeaderStyles = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media only screen and (max-width: 1200px) {
+      width: 95%;
+    }
+
+    @media only screen and (max-width: 450px) {
+      width: 98%;
+    }
   }
 `;
