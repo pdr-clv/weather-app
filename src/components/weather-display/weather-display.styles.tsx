@@ -16,10 +16,28 @@ export const Content = styled.div`
 
   //every item-content is weather and cityinfo and map
   .item-content {
+    border-radius: 10px;
     width: 49%;
     background-color: rgba(0, 0, 0, 0.4);
+  }
 
-    @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1200px) {
+    .item-content--temp {
+      width: 39%;
+    }
+
+    .item-content--map {
+      width: 59%;
+    }
+  }
+
+  @media only screen and (max-width: 960px) {
+    .item-content--temp {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .item-content--map {
       width: 100%;
     }
   }
@@ -28,12 +46,8 @@ export const Content = styled.div`
     width: 95%;
   }
 
-  @media only screen and (max-width: 768px) {
-    flex-direction: column;
-  }
-
   @media only screen and (max-width: 450px) {
-    width: 98;
+    width: 98%;
   }
 `;
 

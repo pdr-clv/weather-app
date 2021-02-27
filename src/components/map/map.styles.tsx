@@ -3,7 +3,9 @@ import ReactMapGL, { Marker } from 'react-map-gl';
 
 import pin from '../../imgs/pin.png';
 
-export const MapContainer = styled(ReactMapGL)``;
+export const MapContainer = styled(ReactMapGL)`
+  border-radius: 10px;
+`;
 
 export const PinImg = styled.img`
   position: absolute;

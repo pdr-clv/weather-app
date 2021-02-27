@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
-import BackgroundImage from './imgs/background-night.jpg';
+import BackgroundImage from './imgs/background-night-light.jpg';
 
 export default createGlobalStyle`
   * {
@@ -17,7 +17,7 @@ export default createGlobalStyle`
     -o-background-size: cover;
     background-size: cover;
     color: rgb(206, 195, 193);
-  }
+  } 
 
   body {
     font-family: 'Roboto', sans-serif, Helvetica,Arial;

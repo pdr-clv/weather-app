@@ -24,7 +24,7 @@ const Map: FC<MapProps> = (props) => {
     height: '100%',
     zoom: 2,
   });
-
+  /*
   useEffect(() => {
     const latitude = lat ? lat : 3;
     const longitude = lon ? lon : 4;
@@ -33,7 +33,34 @@ const Map: FC<MapProps> = (props) => {
       latitude,
       longitude,
     }));
-  }, [lat, lon]);
+  }, [lat, lon]);*/
+
+  useEffect(() => {
+    // Handler to call on window resize
+    const handleResize = () => {
+      const mapwidth = '100%';
+      let mapheight: string;
+      if (window.innerWidth < 960) {
+        mapheight = '400px';
+      } else {
+        mapheight = '100%';
+      }
+      setViewPort((viewPort: viewportProps) => ({
+        ...viewPort,
+        width: mapwidth,
+        height: mapheight,
+      }));
+    };
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
 
   return (
     <MapContainer

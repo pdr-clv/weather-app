@@ -70,7 +70,7 @@ const WeatherDisplay: FC = () => {
       ) : (
         data && (
           <Content>
-            <div className='item-content'>
+            <div className='item-content item-content--temp'>
               <SwitchContainer farengeit={farengeit}>
                 <span>ºC</span>
                 <Switch
@@ -111,9 +111,9 @@ const WeatherDisplay: FC = () => {
                 <SecondaryInfo {...data} farengeit={farengeit} />
               </CityInfo>
             </div>
-            <div className='item-content'>
+            <div className='item-content item-content--map'>
               <Map lat={data.coord.lat} lon={data.coord.lon} />
-            </div>
+                </div>
           </Content>
         )
       )}
