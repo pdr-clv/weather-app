@@ -102,7 +102,7 @@ const WeatherDisplay: FC = () => {
                   />
                   <ImgWeather>
                     <img
-                      src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                      src={`https://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
                       alt=''
                     />
                     <span>{data.weather[0].main}</span>
