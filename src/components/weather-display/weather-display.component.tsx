@@ -113,7 +113,7 @@ const WeatherDisplay: FC = () => {
             </div>
             <div className='item-content item-content--map'>
               <Map lat={data.coord.lat} lon={data.coord.lon} />
-                </div>
+            </div>
           </Content>
         )
       )}
