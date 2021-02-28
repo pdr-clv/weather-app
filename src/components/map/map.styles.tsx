@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import ReactMapGL, { Marker } from 'react-map-gl';
+//we import this mapbox-gl.css to avoid warnings of styles for the map.
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import pin from '../../imgs/pin.png';
 

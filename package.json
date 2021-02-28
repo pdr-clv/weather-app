@@ -14,6 +14,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/redux-logger": "^3.0.8",
     "@types/styled-components": "^5.1.7",
+    "netlify-cli": "^3.10.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-map-gl": "^6.1.7",
