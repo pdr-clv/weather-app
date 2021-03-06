@@ -109,6 +109,8 @@ const WeatherDisplay: FC = () => {
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
+                <div>Forecast per hour</div>
+                <div>Forecast per day</div>
               </CityInfo>
             </div>
             <div className='item-content item-content--map'>

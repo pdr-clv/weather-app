@@ -55,13 +55,6 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
         </p>
       </div>
       <div className='secondary-item'>
-        <h4>PRESSURE</h4>
-        <p className='p-small'>
-          {props.main.pressure}
-          <span>Pa</span>
-        </p>
-      </div>
-      <div className='secondary-item'>
         <h4>SUNRISE</h4>
         <p className='p-small'>
           {localTime.getTargetTime(props.sys.sunrise * 1)}
@@ -75,17 +68,10 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
         </p>
       </div>
       <div className='secondary-item'>
-        <h4>TEMP MAX</h4>
-        <p>
-          {temp_max_translated}
-          <span>{temp_units}</span>
-        </p>
-      </div>
-      <div className='secondary-item'>
-        <h4>TEMP MIN</h4>
-        <p>
-          {temp_min_translated}
-          <span>{temp_units}</span>
+        <h4>PRESSURE</h4>
+        <p className='p-small'>
+          {props.main.pressure}
+          <span>Pa</span>
         </p>
       </div>
       <div className='secondary-item'>

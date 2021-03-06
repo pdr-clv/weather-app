@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SecondaryContainer = styled.div<{ wind?: number }>`
   font-family: sans-serif;
-  width: 340px;
+  width: 250px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -44,7 +44,7 @@ export const SecondaryContainer = styled.div<{ wind?: number }>`
   }
 
   @media only screen and (max-width: 400px) {
-    width: 290px;
+    width: 230px;
     font-size: 0.6em;
     .secondary-item {
       width: 60px;
