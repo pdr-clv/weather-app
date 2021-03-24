@@ -2,6 +2,7 @@ export const GET_WEATHER = 'GET_WEATHER';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_ALERT = 'SET_ALERT';
+export const SET_LOCATION = 'SET_LOCATION';
 
 export interface Weather {
   description: string;
@@ -139,3 +140,13 @@ export interface AlertAction {
 export interface AlertState {
   message: string;
 }
+
+export interface LocationState {
+  latitude: number;
+  longitude: number;
+}
+
+export interface SetLocationAction {
+  type: typeof SET_LOCATION;
+  payload: LocationState;
+} 
