@@ -3,6 +3,7 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_ALERT = 'SET_ALERT';
 export const SET_LOCATION = 'SET_LOCATION';
+export const GET_WEATHER_LAT_LON = 'GET_WEATHER_LAT_LON';
 
 export interface Weather {
   description: string;
@@ -113,6 +114,12 @@ export interface WeatherState {
   error: string;
 }
 
+export interface WeatherStateLatLon {
+  data: WeatherForecastData | null;
+  loading: boolean;
+  error: string;
+}
+
 interface GetWeatherAction {
   type: typeof GET_WEATHER;
   payload: WeatherData;
@@ -146,7 +153,7 @@ export interface LocationState {
   longitude: number;
 }
 
-export interface SetLocationAction {
-  type: typeof SET_LOCATION;
-  payload: LocationState;
+export interface GetWeatherLatLonAction {
+  type: typeof GET_WEATHER_LAT_LON;
+  payload: WeatherForecastData;
 } 

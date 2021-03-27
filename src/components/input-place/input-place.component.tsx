@@ -1,40 +1,51 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Geocoder from 'react-mapbox-gl-geocoder';
 
 import { useDispatch } from 'react-redux';
-import { getWeather, setLoading } from '../../store/actions/weatherActions';
-import { setAlert } from '../../store/actions/alertActions';
+import { getWeatherLatLon } from '../../store/actions/locationActions';
 
 import { FormContainer } from './input-place.styles';
 
 const InputPlace: FC = () => {
   const dispatch = useDispatch();
-  const [city, setCity] = useState('');
+  /*  const [place, setPlace] = useState('');
 
   const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (city.trim() === '') {
+    if (place.trim() === '') {
       return dispatch(setAlert('City is required!'));
     }
     dispatch(setLoading());
-    dispatch(getWeather(city));
+    dispatch(getWeather(place));
   };
   /*
   const handlerChange = (e: React.FormEvent<HTMLInputElement>) => {
     setCity(e.currentTarget.value);
   };*/
 
-  const handleSelect = () => {};
-
+  const handleSelect = (viewport: any, item: any) => {
+    const { latitude, longitude, zoom } = viewport;
+    //sometimes zoom is too small, we set it 3 bydefault is zoom is smaller than 2
+    /*if (zoom < 3 || zoom > 9) {
+      console.log('zoom pequeño');
+      //setWiewport({ latitude, longitude, zoom: 4 });
+      return;
+    }*/
+    //setWiewport({ latitude, longitude, zoom });
+    console.log(latitude, ' ', longitude, ' ', zoom);
+    console.log(viewport, item);
+    dispatch(getWeatherLatLon({ lat: latitude, lon: longitude }));
+  };
+  /*
   const [viewport, setWiewport] = useState({
     latitude: 0,
     longitude: 0,
     zoom: 1,
     initialPlace: '',
-  });
+  });*/
 
   return (
-    <FormContainer onSubmit={(e) => handlerSubmit(e)}>
+    <FormContainer>
       {/*<input
         type='text'
         onChange={(e) => handlerChange(e)}
@@ -44,7 +55,7 @@ const InputPlace: FC = () => {
       <Geocoder
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         onSelected={handleSelect}
-        viewport={viewport}
+        viewport={{}}
         hideOnSelect={true}
         updateInputOnSelect={true}
         className='react-geocoder'
@@ -52,6 +63,7 @@ const InputPlace: FC = () => {
         //itemComponent={ItemAddress}
         //initialInputValue={viewport.initialPlace}
         reverseGeocode={true}
+        onChange={() => console.log('geocoder changes')}
       />
     </FormContainer>
   );
