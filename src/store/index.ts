@@ -4,12 +4,12 @@ import logger from 'redux-logger';
 
 import weatherReducer from './reducers/weatherReducer';
 import alertReducer from './reducers/alertReducer';
-import locationReducer from './reducers/locationReducer';
+import forecastReducer from './reducers/forecastReducer';
 
 const rootReducer = combineReducers({
   weather: weatherReducer,
   alert: alertReducer,
-  location: locationReducer,
+  forecast: forecastReducer,
 });
 
 const middlewares = [];

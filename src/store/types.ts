@@ -2,68 +2,12 @@ export const GET_WEATHER = 'GET_WEATHER';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_ALERT = 'SET_ALERT';
-export const SET_LOCATION = 'SET_LOCATION';
-export const GET_WEATHER_LAT_LON = 'GET_WEATHER_LAT_LON';
 
 export interface Weather {
   description: string;
   icon: string;
   id: number;
   main: string;
-}
-
-interface hourlyData {
-  dt: number;
-  temp: number;
-  feels_like: number;
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  uvi: number;
-  clouds: number;
-  visibility: number;
-  wind_speed: number;
-  wind_deg: number;
-  weather: Weather[];
-  pop: number;
-}
-
-interface dailyData {
-  dt: number;
-  sunrise: number;
-  sunset: number;
-  temp: {
-    day: number;
-    min: number;
-    max: number;
-    night: number;
-    eve: number;
-    morn: number;
-  };
-  feels_like: {
-    day: number;
-    night: number;
-    eve: number;
-    morn: number;
-  };
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  wind_speed: number;
-  wind_deg: number;
-  weather: Weather[];
-  clouds: number;
-  pop: number;
-  uvi: number;
-}
-
-export interface WeatherForecastData {
-  lat: number;
-  lon: number;
-  timezone: string;
-  timezone_offset: number;
-  daily: dailyData[];
-  hourly: hourlyData[];
 }
 
 export interface WeatherData {
@@ -114,12 +58,6 @@ export interface WeatherState {
   error: string;
 }
 
-export interface WeatherStateLatLon {
-  data: WeatherForecastData | null;
-  loading: boolean;
-  error: string;
-}
-
 interface GetWeatherAction {
   type: typeof GET_WEATHER;
   payload: WeatherData;
@@ -147,13 +85,3 @@ export interface AlertAction {
 export interface AlertState {
   message: string;
 }
-
-export interface LocationState {
-  latitude: number;
-  longitude: number;
-}
-
-export interface GetWeatherLatLonAction {
-  type: typeof GET_WEATHER_LAT_LON;
-  payload: WeatherForecastData;
-} 

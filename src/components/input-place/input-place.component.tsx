@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Geocoder from 'react-mapbox-gl-geocoder';
 
 import { useDispatch } from 'react-redux';
-import { getWeatherLatLon } from '../../store/actions/locationActions';
+import { getForecast } from '../../store/actions/forecastActions';
 
 import { FormContainer } from './input-place.styles';
 
@@ -34,7 +34,7 @@ const InputPlace: FC = () => {
     //setWiewport({ latitude, longitude, zoom });
     console.log(latitude, ' ', longitude, ' ', zoom);
     console.log(viewport, item);
-    dispatch(getWeatherLatLon({ lat: latitude, lon: longitude }));
+    dispatch(getForecast({ lat: latitude, lon: longitude }));
   };
   /*
   const [viewport, setWiewport] = useState({

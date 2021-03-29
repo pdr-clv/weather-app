@@ -5,7 +5,6 @@ import {
   WeatherAction,
   WeatherData,
   WeatherError,
-  WeatherForecastData,
 } from '../types';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '..';
@@ -22,22 +21,6 @@ export const getWeather = (
       throw new Error(resData.message);
     }
     const resData: WeatherData = await res.json();
-    try {
-      console.log(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${resData.coord.lat}&lon=${resData.coord.lon}&exclude=current,minutely,hourly,alerts&appid=${process.env.REACT_APP_API_KEY}`
-      );
-      const resForecast = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${resData.coord.lat}&lon=${resData.coord.lon}&exclude=current,minutely,alerts&appid=${process.env.REACT_APP_API_KEY}`
-      );
-      if (!resForecast.ok) {
-        const resDailyJson: WeatherError = await resForecast.json();
-        throw new Error(resDailyJson.message);
-      }
-      const resForecastJson: WeatherForecastData = await resForecast.json();
-      console.log(resForecastJson);
-    } catch (err) {
-      console.log(err);
-    }
     dispatch({ type: GET_WEATHER, payload: resData });
   } catch (err) {
     dispatch({ type: SET_ERROR, payload: err.message });
