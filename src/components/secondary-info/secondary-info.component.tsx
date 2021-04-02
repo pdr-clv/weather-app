@@ -5,16 +5,16 @@ import { getCelsius, getKmHour, getFarengeit, getMilesHour } from '../../utils';
 
 import { SecondaryContainer } from './secondary-info.styles';
 
-import { WeatherData } from '../../store/types';
+import { ForecastData } from '../../store/types/forecastTypes';
 
-interface SecondaryProps extends WeatherData {
+interface SecondaryProps extends ForecastData {
   farengeit: boolean;
 }
 
 const SecondaryInfo: FC<SecondaryProps> = (props) => {
   //invoque class LocalTime, and initializing with data.timezone
   let localTimeZone = 0;
-  if (props) localTimeZone = props.timezone * 1;
+  if (props) localTimeZone = props.timezone_offset;
   const localTime = new LocalTime(localTimeZone);
   let windSpeed: string;
   let temp_max_translated: string;
@@ -22,21 +22,21 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
   let speedUnits: string;
   let temp_units: string;
   if (props.farengeit) {
-    windSpeed = getMilesHour(props.wind.speed);
-    temp_max_translated = getFarengeit(props.main.temp_max);
-    temp_min_translated = getFarengeit(props.main.temp_min);
+    windSpeed = getMilesHour(props.current.wind_speed);
+    temp_max_translated = getFarengeit(props.daily[0].temp.max);
+    temp_min_translated = getFarengeit(props.daily[0].temp.min);
     speedUnits = 'miles/h';
     temp_units = 'ºF';
   } else {
-    windSpeed = getKmHour(props.wind.speed);
-    temp_max_translated = getCelsius(props.main.temp_max);
-    temp_min_translated = getCelsius(props.main.temp_min);
+    windSpeed = getKmHour(props.current.wind_speed);
+    temp_max_translated = getCelsius(props.daily[0].temp.max);
+    temp_min_translated = getCelsius(props.daily[0].temp.min);
     speedUnits = 'km/h';
     temp_units = 'ºC';
   }
 
   return (
-    <SecondaryContainer wind={props.wind.deg}>
+    <SecondaryContainer wind={props.current.wind_deg}>
       <div className='secondary-item'>
         <div className='wind-item'>
           <h4>
@@ -50,34 +50,34 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
       <div className='secondary-item'>
         <h4>HUMIDITY</h4>
         <p>
-          {props.main.humidity}
+          {props.current.humidity}
           <span>%</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>SUNRISE</h4>
         <p className='p-small'>
-          {localTime.getTargetTime(props.sys.sunrise * 1)}
+          {localTime.getTargetTime(props.daily[0].sunrise)}
         </p>
       </div>
       <div className='secondary-item'>
         <h4>CLOUDS</h4>
         <p>
-          {props.clouds.all}
+          {props.current.clouds}
           <span>%</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>PRESSURE</h4>
         <p className='p-small'>
-          {props.main.pressure}
+          {props.current.pressure}
           <span>Pa</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>SUNSET</h4>
         <p className='p-small'>
-          {localTime.getTargetTime(props.sys.sunset * 1)}
+          {localTime.getTargetTime(props.daily[0].sunset)}
         </p>
       </div>
     </SecondaryContainer>

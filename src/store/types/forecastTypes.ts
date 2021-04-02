@@ -80,6 +80,7 @@ export interface ForecastData {
   current: currentData;
   daily: dailyData[];
   hourly: hourlyData[];
+  place?: string;
 }
 
 export interface ForecastError {

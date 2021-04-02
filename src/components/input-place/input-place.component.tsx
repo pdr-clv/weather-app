@@ -34,7 +34,9 @@ const InputPlace: FC = () => {
     //setWiewport({ latitude, longitude, zoom });
     console.log(latitude, ' ', longitude, ' ', zoom);
     console.log(viewport, item);
-    dispatch(getForecast({ lat: latitude, lon: longitude }));
+    // place it can be very long, we keep only 3 last items of the description separeted by comas
+    const place = item.place_name.split(',').slice(-3);
+    dispatch(getForecast({ lat: latitude, lon: longitude, place }));
   };
   /*
   const [viewport, setWiewport] = useState({

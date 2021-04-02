@@ -54,14 +54,14 @@ const TemperatureInfo: FC<TemperatureProps> = (props) => {
 
 const WeatherDisplay: FC = () => {
   const { data, loading, error } = useSelector(
-    (state: RootState) => state.weather
+    (state: RootState) => state.forecast
   );
   const [farengeit, setFarengeit] = useState(false);
   const dispatch = useDispatch();
   if (error) dispatch(setAlert(error));
   //invoque class LocalTime, and initializing with data.timezone
   let localTimeZone = 0;
-  if (data) localTimeZone = data.timezone * 1;
+  if (data) localTimeZone = data.timezone_offset;
   const localTime = new LocalTime(localTimeZone);
   return (
     <WeatherContainer>
@@ -88,24 +88,22 @@ const WeatherDisplay: FC = () => {
               </SwitchContainer>
 
               <CityInfo>
-                <h2>
-                  {data.name} - {data.sys.country}
-                </h2>
+                <h2>{data.place}</h2>
                 <span className='span-time'>
                   Local Time: <span>{localTime.getLocalTime()}</span>
                 </span>
                 <HeaderInfo>
                   <TemperatureInfo
-                    temp={data.main.temp}
-                    tempFeeling={data.main.feels_like}
+                    temp={data.current.temp}
+                    tempFeeling={data.current.feels_like}
                     farengeit={farengeit}
                   />
                   <ImgWeather>
                     <img
-                      src={`https://openweathermap.org/img/wn/${data.weather[0].icon}.png`}
+                      src={`https://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`}
                       alt=''
                     />
-                    <span>{data.weather[0].main}</span>
+                    <span>{data.current.weather[0].main}</span>
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
@@ -114,7 +112,7 @@ const WeatherDisplay: FC = () => {
               </CityInfo>
             </div>
             <div className='item-content item-content--map'>
-              <Map lat={data.coord.lat} lon={data.coord.lon} />
+              <Map lat={data.lat} lon={data.lon} />
             </div>
           </Content>
         )
