@@ -9,7 +9,7 @@ export interface Weather {
   main: string;
 }
 
-interface currentData {
+interface CurrentData {
   dt: number;
   sunrise: number;
   sunset: number;
@@ -27,7 +27,7 @@ interface currentData {
   weather: Weather[];
 }
 
-interface hourlyData {
+export interface HourlyData {
   dt: number;
   temp: number;
   feels_like: number;
@@ -43,7 +43,7 @@ interface hourlyData {
   pop: number;
 }
 
-interface dailyData {
+interface DailyData {
   dt: number;
   sunrise: number;
   sunset: number;
@@ -77,9 +77,9 @@ export interface ForecastData {
   lon: number;
   timezone: string;
   timezone_offset: number;
-  current: currentData;
-  daily: dailyData[];
-  hourly: hourlyData[];
+  current: CurrentData;
+  daily: DailyData[];
+  hourly: HourlyData[];
   place?: string;
 }
 

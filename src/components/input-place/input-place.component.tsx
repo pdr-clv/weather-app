@@ -64,12 +64,6 @@ const InputPlace: FC = () => {
 
   return (
     <FormContainer>
-      {/*<input
-        type='text'
-        onChange={(e) => handlerChange(e)}
-        placeholder='Enter city name'
-      />
-      <button type='submit'>Search</button>*/}
       <GeocoderReact
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         onSelected={handleSelect}

@@ -35,9 +35,13 @@ export class LocalTime {
     return this.pad(hrs) + ':' + this.pad(mins);
   };
 
-  constructor(_timeZone: number) {
+  constructor(_timeZone?: number) {
     this.nowUTCMilliseconds = this.getUTCMilliseconds();
-    this.timeZone = _timeZone * 1000;
+    if(_timeZone) {this.timeZone = _timeZone * 1000
+    } else {
+      this.timeZone = 0;
+    }
+    ;
   }
 
   getTimeMilliseconds() {
@@ -53,5 +57,17 @@ export class LocalTime {
     const targettedUTCMilliseconds =
       this.getUTCMilliseconds(_targettedTime * 1000) + this.timeZone;
     return this.getTimeFormatted(targettedUTCMilliseconds);
+  }
+
+  private prettyTime = (time: number): string => {
+    const timeDevol = new Date(time);
+    return timeDevol.toLocaleTimeString(navigator.language, {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  getPrettyTime(_targetterTime: number) {
+    return this.prettyTime(_targetterTime * 1000);
   }
 }

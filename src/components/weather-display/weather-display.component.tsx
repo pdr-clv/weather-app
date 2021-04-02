@@ -6,8 +6,10 @@ import { LocalTime } from '../../classes/time-format';
 import { getCelsius, getFarengeit } from '../../utils';
 import { RootState } from '../../store';
 import { setAlert } from '../../store/actions/alertActions';
+
 import Map from '../map/map.component';
 import SecondaryInfo from '../secondary-info/secondary-info.component';
+import Forecast from '../forecast/forecast.component';
 
 import {
   WeatherContainer,
@@ -107,7 +109,7 @@ const WeatherDisplay: FC = () => {
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
-                <div>Forecast per hour</div>
+                <Forecast {...data.hourly} />
                 <div>Forecast per day</div>
               </CityInfo>
             </div>
