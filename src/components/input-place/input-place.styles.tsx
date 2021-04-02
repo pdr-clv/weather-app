@@ -1,38 +1,51 @@
 import styled from 'styled-components';
+import Geocoder from 'react-mapbox-gl-geocoder';
 
 export const FormContainer = styled.form`
-  input,
-  button {
-    padding: 5px 80px 5px 5px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1.3em;
-    @media only screen and (max-width: 370px) {
-      font-size: 1em;
-      padding: 5px 65px 5px 5px;
-    }
+  position: relative;
+  top: -17px;
+  left: -10px;
+  @media only screen and (max-width: 370px) {
+    top: -12px;
   }
+`;
 
-  button {
-    margin-left: 10px;
-    padding: 3px;
-    margin: -75px;
-    background-color: rgb(1, 111, 185);
-    color: white;
-    cursor: pointer;
-    :hover {
-      background-color: rgb(222, 60, 75);
-    }
-    @media only screen and (max-width: 370px) {
-      margin: -57px;
-    }
+export const GeocoderReact = styled(Geocoder)`
+  position: absolute;
+  z-index: 1000;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+`;
+
+export const GeocoderInput = styled.input`
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.3em;
+  width: 385px;
+  color: rgb(24, 40, 37);
+  @media only screen and (max-width: 370px) {
+    font-size: 1em;
   }
+  @media only screen and (max-width: 400px) {
+    width: 250px;
+  }
+`;
 
-  input {
+export const GeocoderItem = styled.p`
+  padding: 5px;
+  width: 500px;
+  color: rgb(24, 27, 40);
+  border-bottom: 1px solid rgb(24, 40, 37);
+  &:hover {
+    background-color: rgba(18, 14, 77, 0.5);
+  }
+  @media only screen and (max-width: 550px) {
     width: 385px;
-    color: rgb(24, 40, 37);
-    @media only screen and (max-width: 400px) {
-      width: 250px;
-    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 250px;
   }
 `;

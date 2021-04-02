@@ -18,7 +18,9 @@ export const HeaderStyles = styled.header`
 
     h1 {
       @media only screen and (max-width: 768px) {
-        display: none;
+        //if we do display none, position relative and absolute of Input to get city is not well centered.
+        width: 0;
+        overflow: hidden;
       }
     }
 

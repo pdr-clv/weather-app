@@ -1,10 +1,26 @@
 import { FC } from 'react';
-import Geocoder from 'react-mapbox-gl-geocoder';
 
 import { useDispatch } from 'react-redux';
 import { getForecast } from '../../store/actions/forecastActions';
 
-import { FormContainer } from './input-place.styles';
+import {
+  FormContainer,
+  GeocoderReact,
+  GeocoderInput,
+  GeocoderItem,
+} from './input-place.styles';
+
+const InputAddress: FC = (props) => {
+  return <GeocoderInput {...props} placeholder='Search city' type='text' />;
+};
+
+const ItemAddress: FC = (props) => {
+  return (
+    <GeocoderItem {...props} className='react-geocoder-item'>
+      {props.children}
+    </GeocoderItem>
+  );
+};
 
 const InputPlace: FC = () => {
   const dispatch = useDispatch();
@@ -32,8 +48,8 @@ const InputPlace: FC = () => {
       return;
     }*/
     //setWiewport({ latitude, longitude, zoom });
-    console.log(latitude, ' ', longitude, ' ', zoom);
-    console.log(viewport, item);
+    //console.log(latitude, ' ', longitude, ' ', zoom);
+    //console.log(viewport, item);
     // place it can be very long, we keep only 3 last items of the description separeted by comas
     const place = item.place_name.split(',').slice(-3);
     dispatch(getForecast({ lat: latitude, lon: longitude, place }));
@@ -54,15 +70,14 @@ const InputPlace: FC = () => {
         placeholder='Enter city name'
       />
       <button type='submit'>Search</button>*/}
-      <Geocoder
+      <GeocoderReact
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         onSelected={handleSelect}
         viewport={{}}
         hideOnSelect={true}
         updateInputOnSelect={true}
-        className='react-geocoder'
-        //inputComponent={InputAddress}
-        //itemComponent={ItemAddress}
+        inputComponent={InputAddress}
+        itemComponent={ItemAddress}
         //initialInputValue={viewport.initialPlace}
         reverseGeocode={true}
         onChange={() => console.log('geocoder changes')}
