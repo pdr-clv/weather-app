@@ -1,9 +1,17 @@
-export class LocalTime {
+export interface LocalTimeType {
+  _timeZone?: number;
+  getTimeMilliseconds(): number;
+  getLocalTime(): string;
+  getForecastTime(_targetterTime: number): string;
+}
+
+export class LocalTime implements LocalTimeType {
   private nowUTCMilliseconds: number;
   private timeZone: number;
   private getUTCMilliseconds = (timeTarget?: number): number => {
     let time: Date;
     timeTarget ? (time = new Date(timeTarget)) : (time = new Date());
+
     return (
       time.getUTCHours() * 60 * 60 * 1000 +
       time.getUTCMinutes() * 60 * 1000 +
@@ -37,11 +45,11 @@ export class LocalTime {
 
   constructor(_timeZone?: number) {
     this.nowUTCMilliseconds = this.getUTCMilliseconds();
-    if(_timeZone) {this.timeZone = _timeZone * 1000
+    if (_timeZone) {
+      this.timeZone = _timeZone * 1000;
     } else {
       this.timeZone = 0;
     }
-    ;
   }
 
   getTimeMilliseconds() {
@@ -59,15 +67,18 @@ export class LocalTime {
     return this.getTimeFormatted(targettedUTCMilliseconds);
   }
 
-  private prettyTime = (time: number): string => {
+  private roundTimeForecast = (time: number): string => {
     const timeDevol = new Date(time);
-    return timeDevol.toLocaleTimeString(navigator.language, {
+    /*return timeDevol.toLocaleTimeString(navigator.language, {
       hour: '2-digit',
       minute: '2-digit',
-    });
+    });*/
+    return timeDevol.getHours().toString() + ':00';
   };
 
-  getPrettyTime(_targetterTime: number) {
-    return this.prettyTime(_targetterTime * 1000);
+  getForecastTime(_targetterTime: number) {
+    return this.roundTimeForecast(
+      _targetterTime * 1000 + this.nowUTCMilliseconds + this.timeZone
+    );
   }
 }

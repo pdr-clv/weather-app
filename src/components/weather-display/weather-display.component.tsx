@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import Switch from 'react-switch';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -109,7 +109,7 @@ const WeatherDisplay: FC = () => {
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
-                <Forecast {...data.hourly} />
+                <Forecast data= {data.hourly} localTime={localTime}/>
                 <div>Forecast per day</div>
               </CityInfo>
             </div>
