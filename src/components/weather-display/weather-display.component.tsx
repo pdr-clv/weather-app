@@ -3,13 +3,14 @@ import Switch from 'react-switch';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { LocalTime } from '../../classes/time-format';
-import { getCelsius, getFarengeit } from '../../utils';
+import { convertTemperature } from '../../utils';
 import { RootState } from '../../store';
 import { setAlert } from '../../store/actions/alertActions';
 
 import Map from '../map/map.component';
 import SecondaryInfo from '../secondary-info/secondary-info.component';
 import Forecast from '../forecast/forecast.component';
+import ForecastDaily from '../forecast-daily/forecast-daily.component';
 
 import {
   WeatherContainer,
@@ -33,12 +34,12 @@ const TemperatureInfo: FC<TemperatureProps> = (props) => {
   let grades: string;
 
   if (farengeit) {
-    tempTranslated = getFarengeit(temp);
-    tempFeelingTranslated = getFarengeit(tempFeeling);
+    tempTranslated = convertTemperature(temp, 'F');
+    tempFeelingTranslated = convertTemperature(tempFeeling, 'F');
     grades = 'ºF';
   } else {
-    tempTranslated = getCelsius(temp);
-    tempFeelingTranslated = getCelsius(tempFeeling);
+    tempTranslated = convertTemperature(temp, 'C');
+    tempFeelingTranslated = convertTemperature(tempFeeling, 'C');
     grades = 'ºC';
   }
   return (
@@ -109,8 +110,11 @@ const WeatherDisplay: FC = () => {
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
-                <Forecast data= {data.hourly} localTime={localTime}/>
-                <div>Forecast per day</div>
+                <Forecast data={data.hourly} localTime={localTime} />
+                <ForecastDaily
+                  data={data.daily}
+                  localTime={localTime}
+                ></ForecastDaily>
               </CityInfo>
             </div>
             <div className='item-content item-content--map'>

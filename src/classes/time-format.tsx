@@ -2,7 +2,8 @@ export interface LocalTimeType {
   _timeZone?: number;
   getTimeMilliseconds(): number;
   getLocalTime(): string;
-  getForecastTime(_targetterTime: number): string;
+  getForecastTime(targettedTime: number): string;
+  getWeekDay(targettedTime: number): any;
 }
 
 export class LocalTime implements LocalTimeType {
@@ -32,13 +33,16 @@ export class LocalTime implements LocalTimeType {
     timeTarget = (timeTarget - ms) / 1000;
     const secs: number = timeTarget % 60;
     timeTarget = (timeTarget - secs) / 60;
-    const mins: number = timeTarget % 60;
+    let mins: number = timeTarget % 60;
     let hrs: number = (timeTarget - mins) / 60;
 
     if (hrs > 23) {
       hrs = hrs - 24;
     } else if (hrs < 0) {
       hrs = hrs + 24;
+    } else if (hrs === 0 && mins < 0) {
+      hrs = 23;
+      mins = mins + 60;
     }
     return this.pad(hrs) + ':' + this.pad(mins);
   };
@@ -69,16 +73,28 @@ export class LocalTime implements LocalTimeType {
 
   private roundTimeForecast = (time: number): string => {
     const timeDevol = new Date(time);
-    /*return timeDevol.toLocaleTimeString(navigator.language, {
-      hour: '2-digit',
-      minute: '2-digit',
-    });*/
-    return timeDevol.getHours().toString() + ':00';
+    //time coming, must be converted in UTCHours to show the correct time for every timezone
+    //we assing zero minutes to hour, because it is not relevant. This is the rounded trick in this function.
+    return timeDevol.getUTCHours().toString() + ':00';
   };
 
-  getForecastTime(_targetterTime: number) {
+  getForecastTime(targettedTime: number) {
     return this.roundTimeForecast(
-      _targetterTime * 1000 + this.nowUTCMilliseconds + this.timeZone
+      this.getUTCMilliseconds(targettedTime * 1000) + this.timeZone
     );
+  }
+
+  getWeekDay(targettedTime: number) {
+    const weekDays: string[] = [
+      'SUN',
+      'MON',
+      'TUE',
+      'WED',
+      'THU',
+      'FRI',
+      'SAT',
+    ];
+    const weekDayNumber: number = new Date(targettedTime * 1000).getDay();
+    return weekDays[weekDayNumber];
   }
 }

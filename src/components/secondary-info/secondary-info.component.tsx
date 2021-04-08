@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
 
 import { LocalTime } from '../../classes/time-format';
-import { getCelsius, getKmHour, getFarengeit, getMilesHour } from '../../utils';
+import {
+  getKmHour,
+  getMilesHour,
+  convertTemperature,
+} from '../../utils';
 
 import { SecondaryContainer } from './secondary-info.styles';
 
@@ -23,14 +27,14 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
   let temp_units: string;
   if (props.farengeit) {
     windSpeed = getMilesHour(props.current.wind_speed);
-    temp_max_translated = getFarengeit(props.daily[0].temp.max);
-    temp_min_translated = getFarengeit(props.daily[0].temp.min);
+    temp_max_translated = convertTemperature(props.daily[0].temp.max, 'F');
+    temp_min_translated = convertTemperature(props.daily[0].temp.min, 'F');
     speedUnits = 'miles/h';
     temp_units = 'ºF';
   } else {
     windSpeed = getKmHour(props.current.wind_speed);
-    temp_max_translated = getCelsius(props.daily[0].temp.max);
-    temp_min_translated = getCelsius(props.daily[0].temp.min);
+    temp_max_translated = convertTemperature(props.daily[0].temp.max, 'C');
+    temp_min_translated = convertTemperature(props.daily[0].temp.min, 'C');
     speedUnits = 'km/h';
     temp_units = 'ºC';
   }

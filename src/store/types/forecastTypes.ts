@@ -43,7 +43,7 @@ export interface HourlyData {
   pop: number;
 }
 
-interface DailyData {
+export interface DailyData {
   dt: number;
   sunrise: number;
   sunset: number;
@@ -70,6 +70,8 @@ interface DailyData {
   clouds: number;
   pop: number;
   uvi: number;
+  rain?:number;
+  snow?:number;
 }
 
 export interface ForecastData {
