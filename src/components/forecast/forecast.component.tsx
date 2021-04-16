@@ -18,7 +18,7 @@ const Forecast: FC<ForecastProps> = (props) => {
       <div className='forecast-container'>
         {[2, 6, 10, 14, 18, 22].map((i) => {
           return (
-            <ForecastItem>
+            <ForecastItem key={i}>
               <div>{localTime.getForecastTime(data[i].dt)}</div>
               <img
                 src={`https://openweathermap.org/img/wn/${data[i].weather[0].icon}.png`}

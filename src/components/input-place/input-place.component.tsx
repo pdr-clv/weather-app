@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getForecast } from '../../store/actions/forecastActions';
@@ -39,7 +39,48 @@ const InputPlace: FC = () => {
   const handlerChange = (e: React.FormEvent<HTMLInputElement>) => {
     setCity(e.currentTarget.value);
   };*/
+  const [inputPlace, setInputPlace] = useState('');
+  const [loadingGeocoder, setLoadingGeocoder] = useState(true);
+  useEffect((): any => {
+    let mountedGeocoder = true;
+    const geoFindMe = () => {
+      if (!navigator.geolocation) {
+        console.log('Geolocation is not supported by your browser');
+        return;
+      }
+      const success = async (position: any) => {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        try {
+          if (mountedGeocoder) {
+            const response = await fetch(
+              `http://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/${longitude},${latitude}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`
+            );
+            const jsonResponse = await response.json();
+            const place = jsonResponse.features[0].place_name;
+            setInputPlace(place);
+            dispatch(
+              getForecast({ lat: latitude, lon: longitude, place, zoom: 5 })
+            );
+            setLoadingGeocoder(false);
+          }
+        } catch (err) {
+          if (mountedGeocoder) {
+            console.log(err);
+            setLoadingGeocoder(false);
+          }
+        }
+      };
+      const error = () => {
+        console.log('Unable to retrieve your location');
+      };
+      navigator.geolocation.getCurrentPosition(success, error);
+    };
+    geoFindMe();
 
+    return () => (mountedGeocoder = false);
+    // eslint-disable-next-line
+  }, []);
   const handleSelect = (viewport: ViewPortType, item: ItemType) => {
     const { latitude, longitude, zoom } = viewport;
     //sometimes zoom is too small, we set it 3 bydefault is zoom is smaller than 2
@@ -68,18 +109,22 @@ const InputPlace: FC = () => {
 
   return (
     <FormContainer>
-      <GeocoderReact
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        onSelected={handleSelect}
-        viewport={{}}
-        hideOnSelect={true}
-        updateInputOnSelect={true}
-        inputComponent={InputAddress}
-        itemComponent={ItemAddress}
-        //initialInputValue={viewport.initialPlace}
-        reverseGeocode={true}
-        onChange={() => console.log('geocoder changes')}
-      />
+      {loadingGeocoder ? (
+        <span>...Loading</span>
+      ) : (
+        <GeocoderReact
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          onSelected={handleSelect}
+          viewport={{}}
+          hideOnSelect={true}
+          updateInputOnSelect={true}
+          inputComponent={InputAddress}
+          itemComponent={ItemAddress}
+          initialInputValue={inputPlace}
+          reverseGeocode={true}
+          onChange={() => console.log('geocoder changes')}
+        />
+      )}
     </FormContainer>
   );
 };
