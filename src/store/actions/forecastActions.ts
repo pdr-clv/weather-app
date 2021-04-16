@@ -10,12 +10,13 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '..';
 
 export const getForecast = (LatLon: {
+  zoom: number;
   lat: number;
   lon: number;
-  place: [string];
+  place: string[];
 }): ThunkAction<void, RootState, null, ForecastAction> => async (dispatch) => {
   try {
-    const { lat, lon, place } = LatLon;
+    const { lat, lon, place, zoom } = LatLon;
     const res = await fetch(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,alerts&appid=${process.env.REACT_APP_API_KEY}`
     );
@@ -25,7 +26,11 @@ export const getForecast = (LatLon: {
     }
     const placeString = place.toString();
     const resData: ForecastData = await res.json();
-    const resDataWithPlace: ForecastData = { ...resData, place: placeString };
+    const resDataWithPlace: ForecastData = {
+      ...resData,
+      place: placeString,
+      zoom,
+    };
     dispatch({ type: GET_FORECAST, payload: resDataWithPlace });
   } catch (err) {
     dispatch({ type: SET_ERROR, payload: err.message });

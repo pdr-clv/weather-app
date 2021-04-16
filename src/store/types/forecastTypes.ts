@@ -77,6 +77,7 @@ export interface DailyData {
 export interface ForecastData {
   lat: number;
   lon: number;
+  zoom: number;
   timezone: string;
   timezone_offset: number;
   current: CurrentData;

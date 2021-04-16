@@ -13,18 +13,18 @@ interface viewportProps {
 interface MapProps {
   lat: number;
   lon: number;
+  zoom: number;
 }
 
 const Map: FC<MapProps> = (props) => {
-  const { lat, lon } = props;
+  const { lat, lon, zoom } = props;
   const [viewPort, setViewPort] = useState({
     latitude: lat,
     longitude: lon,
     width: '100%',
     height: '100%',
-    zoom: 2,
+    zoom,
   });
-  /*
   useEffect(() => {
     const latitude = lat ? lat : 3;
     const longitude = lon ? lon : 4;
@@ -32,8 +32,9 @@ const Map: FC<MapProps> = (props) => {
       ...viewPort,
       latitude,
       longitude,
+      zoom,
     }));
-  }, [lat, lon]);*/
+  }, [lat, lon, zoom]);
 
   useEffect(() => {
     // Handler to call on window resize

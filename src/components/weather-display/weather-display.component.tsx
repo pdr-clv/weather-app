@@ -118,7 +118,7 @@ const WeatherDisplay: FC = () => {
               </CityInfo>
             </div>
             <div className='item-content item-content--map'>
-              <Map lat={data.lat} lon={data.lon} />
+              <Map lat={data.lat} lon={data.lon} zoom={data.zoom}/>
             </div>
           </Content>
         )

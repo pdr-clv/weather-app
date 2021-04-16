@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { getForecast } from '../../store/actions/forecastActions';
 
+import { ViewPortType, ItemType } from '../component-types';
 import {
   FormContainer,
   GeocoderReact,
@@ -39,20 +40,23 @@ const InputPlace: FC = () => {
     setCity(e.currentTarget.value);
   };*/
 
-  const handleSelect = (viewport: any, item: any) => {
+  const handleSelect = (viewport: ViewPortType, item: ItemType) => {
     const { latitude, longitude, zoom } = viewport;
     //sometimes zoom is too small, we set it 3 bydefault is zoom is smaller than 2
-    /*if (zoom < 3 || zoom > 9) {
-      console.log('zoom pequeño');
-      //setWiewport({ latitude, longitude, zoom: 4 });
-      return;
-    }*/
+    let zoomToState = zoom;
+    if (zoom < 3) {
+      zoomToState = 3;
+    } else if (zoom > 12) {
+      zoomToState = 12;
+    }
     //setWiewport({ latitude, longitude, zoom });
     //console.log(latitude, ' ', longitude, ' ', zoom);
     //console.log(viewport, item);
     // place it can be very long, we keep only 3 last items of the description separeted by comas
     const place = item.place_name.split(',').slice(-3);
-    dispatch(getForecast({ lat: latitude, lon: longitude, place }));
+    dispatch(
+      getForecast({ lat: latitude, lon: longitude, place, zoom: zoomToState })
+    );
   };
   /*
   const [viewport, setWiewport] = useState({

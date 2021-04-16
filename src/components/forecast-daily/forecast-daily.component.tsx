@@ -13,7 +13,6 @@ interface ForecastDailyProps {
 
 const ForecastDaily: FC<ForecastDailyProps> = (props) => {
   const { data, localTime } = props;
-  console.log(localTime.getWeekDay(data[0].dt));
   return (
     <ForecastContainer>
       <div className='forecast-container'>
