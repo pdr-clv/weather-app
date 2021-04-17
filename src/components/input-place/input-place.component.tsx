@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getForecast } from '../../store/actions/forecastActions';
@@ -25,22 +25,13 @@ const ItemAddress: FC = (props) => {
 
 const InputPlace: FC = () => {
   const dispatch = useDispatch();
-  /*  const [place, setPlace] = useState('');
-
-  const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (place.trim() === '') {
-      return dispatch(setAlert('City is required!'));
-    }
-    dispatch(setLoading());
-    dispatch(getWeather(place));
-  };
-  /*
-  const handlerChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setCity(e.currentTarget.value);
-  };*/
   const [inputPlace, setInputPlace] = useState('');
   const [loadingGeocoder, setLoadingGeocoder] = useState(true);
+  //later we must interact with geocoder and input type submit when we submit form.
+  const geocoderRef = useRef<any>();
+  const inputRef = useRef<any>();
+
+  //all this useEffect executing when we render page it is to get the local coordenates and name place, in order to fill webpage with inner local data
   useEffect((): any => {
     let mountedGeocoder = true;
     const geoFindMe = () => {
@@ -81,6 +72,7 @@ const InputPlace: FC = () => {
     return () => (mountedGeocoder = false);
     // eslint-disable-next-line
   }, []);
+
   const handleSelect = (viewport: ViewPortType, item: ItemType) => {
     const { latitude, longitude, zoom } = viewport;
     //sometimes zoom is too small, we set it 3 bydefault is zoom is smaller than 2
@@ -90,29 +82,34 @@ const InputPlace: FC = () => {
     } else if (zoom > 12) {
       zoomToState = 12;
     }
-    //setWiewport({ latitude, longitude, zoom });
-    //console.log(latitude, ' ', longitude, ' ', zoom);
-    //console.log(viewport, item);
     // place it can be very long, we keep only 3 last items of the description separeted by comas
     const place = item.place_name.split(',').slice(-3);
     dispatch(
       getForecast({ lat: latitude, lon: longitude, place, zoom: zoomToState })
     );
   };
-  /*
-  const [viewport, setWiewport] = useState({
-    latitude: 0,
-    longitude: 0,
-    zoom: 1,
-    initialPlace: '',
-  });*/
+
+  const handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const submitValues = geocoderRef.current.state.results;
+    if (!submitValues.length) {
+      return;
+    }
+    const lat = submitValues[0].center[1];
+    const lon = submitValues[0].center[0];
+    const place = submitValues[0].place_name.split(',').slice(-3);
+    //we must add an empty input type submit, and we focus after submitting form, in order to get empty Geocoder suggestions.
+    inputRef.current.focus();
+    dispatch(getForecast({ lat, lon, place, zoom: 4 }));
+  };
 
   return (
-    <FormContainer>
+    <FormContainer onSubmit={(e) => handlerSubmit(e)}>
       {loadingGeocoder ? (
         <span>...Loading</span>
       ) : (
         <GeocoderReact
+          ref={geocoderRef}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           onSelected={handleSelect}
           viewport={{}}
@@ -122,9 +119,11 @@ const InputPlace: FC = () => {
           itemComponent={ItemAddress}
           initialInputValue={inputPlace}
           reverseGeocode={true}
-          onChange={() => console.log('geocoder changes')}
+          limit={8}
         />
       )}
+      {/* We add input form, but it is hidden behind geocoder input, because there is no need to show it, and after submitting form, we must focus on it to get empty Geocoder suggestions*/}
+      <input type='submit' ref={inputRef} />
     </FormContainer>
   );
 };

@@ -1,11 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { LocalTime } from '../../classes/time-format';
-import {
-  getKmHour,
-  getMilesHour,
-  convertTemperature,
-} from '../../utils';
+import { getSpeed } from '../../utils';
 
 import { SecondaryContainer } from './secondary-info.styles';
 
@@ -16,31 +12,18 @@ interface SecondaryProps extends ForecastData {
 }
 
 const SecondaryInfo: FC<SecondaryProps> = (props) => {
+  const { daily, current, timezone_offset, farengeit } = props;
   //invoque class LocalTime, and initializing with data.timezone
   let localTimeZone = 0;
-  if (props) localTimeZone = props.timezone_offset;
+  if (props) localTimeZone = timezone_offset;
   const localTime = new LocalTime(localTimeZone);
   let windSpeed: string;
-  let temp_max_translated: string;
-  let temp_min_translated: string;
   let speedUnits: string;
-  let temp_units: string;
-  if (props.farengeit) {
-    windSpeed = getMilesHour(props.current.wind_speed);
-    temp_max_translated = convertTemperature(props.daily[0].temp.max, 'F');
-    temp_min_translated = convertTemperature(props.daily[0].temp.min, 'F');
-    speedUnits = 'miles/h';
-    temp_units = 'ºF';
-  } else {
-    windSpeed = getKmHour(props.current.wind_speed);
-    temp_max_translated = convertTemperature(props.daily[0].temp.max, 'C');
-    temp_min_translated = convertTemperature(props.daily[0].temp.min, 'C');
-    speedUnits = 'km/h';
-    temp_units = 'ºC';
-  }
+  windSpeed = getSpeed(current.wind_speed, farengeit);
+  speedUnits = farengeit ? 'miles/h' : 'km/h';
 
   return (
-    <SecondaryContainer wind={props.current.wind_deg}>
+    <SecondaryContainer wind={current.wind_deg}>
       <div className='secondary-item'>
         <div className='wind-item'>
           <h4>
@@ -54,35 +37,31 @@ const SecondaryInfo: FC<SecondaryProps> = (props) => {
       <div className='secondary-item'>
         <h4>HUMIDITY</h4>
         <p>
-          {props.current.humidity}
+          {current.humidity}
           <span>%</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>SUNRISE</h4>
-        <p className='p-small'>
-          {localTime.getTargetTime(props.daily[0].sunrise)}
-        </p>
+        <p className='p-small'>{localTime.getTargetTime(daily[0].sunrise)}</p>
       </div>
       <div className='secondary-item'>
         <h4>CLOUDS</h4>
         <p>
-          {props.current.clouds}
+          {current.clouds}
           <span>%</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>PRESSURE</h4>
         <p className='p-small'>
-          {props.current.pressure}
+          {current.pressure}
           <span>Pa</span>
         </p>
       </div>
       <div className='secondary-item'>
         <h4>SUNSET</h4>
-        <p className='p-small'>
-          {localTime.getTargetTime(props.daily[0].sunset)}
-        </p>
+        <p className='p-small'>{localTime.getTargetTime(daily[0].sunset)}</p>
       </div>
     </SecondaryContainer>
   );

@@ -3,10 +3,10 @@ import Geocoder from 'react-mapbox-gl-geocoder';
 
 export const FormContainer = styled.form`
   position: relative;
-  top: -17px;
+  top: -8px;
   left: -10px;
   @media only screen and (max-width: 370px) {
-    top: -12px;
+    top: -4px;
   }
 `;
 

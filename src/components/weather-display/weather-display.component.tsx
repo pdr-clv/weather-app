@@ -33,15 +33,9 @@ const TemperatureInfo: FC<TemperatureProps> = (props) => {
   let tempFeelingTranslated: string;
   let grades: string;
 
-  if (farengeit) {
-    tempTranslated = convertTemperature(temp, 'F');
-    tempFeelingTranslated = convertTemperature(tempFeeling, 'F');
-    grades = 'ºF';
-  } else {
-    tempTranslated = convertTemperature(temp, 'C');
-    tempFeelingTranslated = convertTemperature(tempFeeling, 'C');
-    grades = 'ºC';
-  }
+  tempTranslated = convertTemperature(temp, farengeit);
+  tempFeelingTranslated = convertTemperature(tempFeeling, farengeit);
+  grades = farengeit ? 'ºF': 'ºC';
   return (
     <div className='temperature-container'>
       <div className='degrees-container'>
@@ -110,15 +104,16 @@ const WeatherDisplay: FC = () => {
                   </ImgWeather>
                 </HeaderInfo>
                 <SecondaryInfo {...data} farengeit={farengeit} />
-                <Forecast data={data.hourly} localTime={localTime} />
+                <Forecast data={data.hourly} localTime={localTime} farengeit={farengeit} />
                 <ForecastDaily
                   data={data.daily}
                   localTime={localTime}
+                  farengeit={farengeit}
                 ></ForecastDaily>
               </CityInfo>
             </div>
             <div className='item-content item-content--map'>
-              <Map lat={data.lat} lon={data.lon} zoom={data.zoom}/>
+              <Map lat={data.lat} lon={data.lon} zoom={data.zoom} />
             </div>
           </Content>
         )

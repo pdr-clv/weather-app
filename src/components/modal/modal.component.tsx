@@ -4,7 +4,7 @@ import { RootState } from '../../store';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setAlert } from '../../store/actions/alertActions';
-import { resetError } from '../../store/actions/weatherActions';
+import { resetError } from '../../store/actions/forecastActions';
 
 import {
   ModalContainer,

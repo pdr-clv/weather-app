@@ -9,10 +9,11 @@ import { ForecastContainer, ForecastItem } from './forecast-daily.styles';
 interface ForecastDailyProps {
   data: DailyData[];
   localTime: LocalTimeType;
+  farengeit: boolean;
 }
 
 const ForecastDaily: FC<ForecastDailyProps> = (props) => {
-  const { data, localTime } = props;
+  const { data, localTime, farengeit } = props;
   return (
     <ForecastContainer>
       <div className='forecast-container'>
@@ -26,8 +27,8 @@ const ForecastDaily: FC<ForecastDailyProps> = (props) => {
               />
               <div>{(data[i].pop * 100).toFixed(0)}%</div>
               <div>
-                {convertTemperature(data[i].temp.max, 'C')}º/
-                {convertTemperature(data[i].temp.min, 'C')}º
+                {convertTemperature(data[i].temp.max, farengeit)}º/
+                {convertTemperature(data[i].temp.min, farengeit)}º
               </div>
             </ForecastItem>
           );
